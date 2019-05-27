@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
@@ -9,8 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp"
-        android:background="@color/gray">
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/text_view_position"
@@ -24,10 +24,10 @@
             android:id="@+id/text_view_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Movie Title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:layout_toStartOf="@id/text_view_position"
             android:layout_alignParentStart="true"
+            android:text="@string/captain_america1_title"
             android:ellipsize="end"/>
 
         <TextView
@@ -35,7 +35,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_view_title"
-            android:text="Description"/>
+            android:maxLines="2"
+            android:text="@string/captain_america1_description"
+            android:ellipsize="end"/>
 
     </RelativeLayout>
 

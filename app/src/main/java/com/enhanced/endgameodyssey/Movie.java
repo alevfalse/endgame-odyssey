@@ -3,8 +3,15 @@ package com.enhanced.endgameodyssey;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
-
+/**
+ * This is the Movie entity which represents a table in the MovieDatabase.
+ * It is a simple class that is annotated with @Entity so that Room will know that this is an entity
+ * of the MovieDatabase.
+ *
+ * We do not set/update any data directly onto the Movie class instances.
+ * We update them on the database directly using this entity's Data Access Object,
+ * the MovieDAO class.
+ */
 @Entity(tableName = "movie_table")
 public class Movie {
 
@@ -15,20 +22,23 @@ public class Movie {
     private String title;
     private String description;
     private String imageFilename;
-    private Date releasedAt;
+    private String releaseDate;
+
     private int timelinePosition;
     private float rating;
 
-    // The only field that can be set
+    // The only field that can be updated in the database
     private boolean watched;
+    private boolean current;
 
-    public Movie(String title, String description, String imageFilename, Date releasedAt, int timelinePosition, float rating) {
+    public Movie(String title, String description, String imageFilename, String releaseDate, int timelinePosition, float rating, boolean current) {
         this.title = title;
         this.description = description;
-        this.releasedAt = releasedAt;
+        this.releaseDate = releaseDate;
         this.timelinePosition = timelinePosition;
         this.rating = rating;
         this.imageFilename = imageFilename;
+        this.current = current;
         this.watched = false;
     }
 
@@ -37,12 +47,8 @@ public class Movie {
         this.id = id;
     }
 
-    public void watch() {
-        this.watched = true;
-    }
-
-    public void unwatch() {
-        this.watched = false;
+    public void setWatched(Boolean watched) {
+        this.watched = watched;
     }
 
     // Getters
@@ -62,8 +68,8 @@ public class Movie {
         return imageFilename;
     }
 
-    public Date getReleasedAt() {
-        return releasedAt;
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
     public int getTimelinePosition() {
@@ -76,5 +82,9 @@ public class Movie {
 
     public boolean isWatched() {
         return watched;
+    }
+
+    public boolean isCurrent() {
+        return current;
     }
 }

@@ -9,14 +9,13 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 /**
  *     This is the singleton MovieDatabase abstract class that Room will subclass.
  *
  *     A Room database can have multiple entities (tables) with each entity having its own corresponding
- *     Data Access Oject, therefore a Room database can have multiple DAO's but since we only have one
+ *     Data Access Object, therefore a Room database can have multiple DAO's but since we only have one
  *     entity (Movie), we only have one Data Access Object in this class-- MovieDAO.
  *
  *     This class doesn't have a MovieDAO member variable. We can access the Movie's DAO using the abstract method movieDAO()
@@ -27,11 +26,10 @@ import java.util.Locale;
  *     We can now then get a single instance of MovieDatabase using the getInstance() synchronized method and then
  *     access the method movieDAO from it.
  */
-@Database(entities = Movie.class, version = 1)
+@Database(entities = Movie.class, version = 3)
 public abstract class MovieDatabase extends RoomDatabase {
 
-    // Create a singleton
-    private static MovieDatabase instance;
+    private static MovieDatabase instance; // Singleton
     private static Context mContext;
 
     // Room subclasses the MovieDatabase class therefore we can call this abstract method after MovieDatabase
@@ -43,10 +41,12 @@ public abstract class MovieDatabase extends RoomDatabase {
     public static synchronized MovieDatabase getInstance(Context context) {
         if (instance == null) {
             mContext = context;
-            instance = Room.databaseBuilder(context.getApplicationContext(),
-                    MovieDatabase.class, "movie_database")
-                    .fallbackToDestructiveMigration()
-                    .addCallback(roomCallback)
+            instance = Room.databaseBuilder(
+                    context.getApplicationContext(), // Application context
+                    MovieDatabase.class, // Database class
+                    "movie_database") // Database name
+                    .fallbackToDestructiveMigration() // Recreate database from scratch whenever version is incremented
+                    .addCallback(roomCallback) // Add an onCreate callback
                     .build();
         }
 
@@ -54,6 +54,8 @@ public abstract class MovieDatabase extends RoomDatabase {
     }
 
     // A callback that is added to Room's database builder that populates the database upon creation only.
+    // This must be executed on the background thread (asynchronously) since Room doesn't allow execution of
+    // database operations on the main thread which could freeze the app and can cause it to crash.
     private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -88,7 +90,7 @@ public abstract class MovieDatabase extends RoomDatabase {
             return null;
         }
 
-        // This is pretty much self-explanatory else re-enroll to Dean Mitch's OOP.
+        // This is pretty much self-explanatory otherwise re-enroll to Dean Mitch's OOP.
         private static void insertMovies(MovieDAO movieDAO) throws Exception{
 
             // Create a Locale for the SimpleDateFormat's constructor with arguments of language and country.
@@ -96,35 +98,37 @@ public abstract class MovieDatabase extends RoomDatabase {
 
             // new Movie(String title, String description, String imageFilename, Date releasedAt, int timelinePosition, float rating)
 
+            // TODO: Research on XML parser for the movies strings.
+
             // Captain America: The First Avenger
             movieDAO.insert(new Movie(
                     mContext.getString(R.string.captain_america1_title),
                     mContext.getString(R.string.captain_america1_description),
                     mContext.getString(R.string.captain_america1_image_filename),
-                    new SimpleDateFormat("dd/MM/yyyy", locale).parse(mContext.getString(R.string.captain_america1_releasedAt)),
+                    mContext.getString(R.string.captain_america1_releasedAt),
                     Integer.parseInt(mContext.getString(R.string.captain_america1_timelinePosition)),
-                    Float.parseFloat(mContext.getString(R.string.captain_america1_rating))
-            ));
+                    Float.parseFloat(mContext.getString(R.string.captain_america1_rating)),
+                    true));
 
             // Captain Marvel
             movieDAO.insert(new Movie(
                     mContext.getString(R.string.captain_marvel_title),
                     mContext.getString(R.string.captain_marvel_description),
                     mContext.getString(R.string.captain_marvel_image_filename),
-                    new SimpleDateFormat("dd/MM/yyyy", locale).parse(mContext.getString(R.string.captain_marvel_releasedAt)),
+                    mContext.getString(R.string.captain_marvel_releasedAt),
                     Integer.parseInt(mContext.getString(R.string.captain_marvel_timelinePosition)),
-                    Float.parseFloat(mContext.getString(R.string.captain_marvel_rating))
-            ));
+                    Float.parseFloat(mContext.getString(R.string.captain_marvel_rating)),
+                    false));
 
             // Iron Man
             movieDAO.insert(new Movie(
                     mContext.getString(R.string.iron_man1_title),
                     mContext.getString(R.string.iron_man1_description),
                     mContext.getString(R.string.iron_man1_image_filename),
-                    new SimpleDateFormat("dd/MM/yyyy", locale).parse(mContext.getString(R.string.iron_man1_releasedAt)),
+                    mContext.getString(R.string.iron_man1_releasedAt),
                     Integer.parseInt(mContext.getString(R.string.iron_man1_timelinePosition)),
-                    Float.parseFloat(mContext.getString(R.string.iron_man1_rating))
-            ));
+                    Float.parseFloat(mContext.getString(R.string.iron_man1_rating)),
+                    false));
         }
     }
 }
