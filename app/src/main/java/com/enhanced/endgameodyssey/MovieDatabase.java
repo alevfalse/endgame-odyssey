@@ -19,12 +19,13 @@ import java.util.Locale;
  *     Data Access Oject, therefore a Room database can have multiple DAO's but since we only have one
  *     entity (Movie), we only have one Data Access Object in this class-- MovieDAO.
  *
- *     This class doesn't have a MovieDAO variable. We can access the Movie's DAO using the abstract method movieDAO()
- *     which we'll call using the database's single instance. but since this class is an abstract class, we cannot create
+ *     This class doesn't have a MovieDAO member variable. We can access the Movie's DAO using the abstract method movieDAO()
+ *     which we'll call using the database's single instance. But since this class is an abstract class, we cannot create
  *     an instance of the MovieDatabase using the 'new' keyword. That is why we have annotated this class with @Database
  *     so that Room will subclass MovieDatabase implement the class for us.
  *
- *     We can now then get a single instance of MovieDatabase using the getInstance() synchronized method.
+ *     We can now then get a single instance of MovieDatabase using the getInstance() synchronized method and then
+ *     access the method movieDAO from it.
  */
 @Database(entities = Movie.class, version = 1)
 public abstract class MovieDatabase extends RoomDatabase {
@@ -33,8 +34,8 @@ public abstract class MovieDatabase extends RoomDatabase {
     private static MovieDatabase instance;
     private static Context mContext;
 
-    // Room subclasses the MovieDatabase class therefore we can call this abstract method
-    // after MovieDatabase is instantiated using MovieDatabase.getInstance() and be able to get the MovieDAO
+    // Room subclasses the MovieDatabase class therefore we can call this abstract method after MovieDatabase
+    // is instantiated using MovieDatabase.getInstance() and be able to get the MovieDAO
     public abstract MovieDAO movieDAO();
 
     // This builds an instance of MovieDatabase if none exists, then returns it.
@@ -61,8 +62,8 @@ public abstract class MovieDatabase extends RoomDatabase {
         }
     };
 
-    // This is called upon creation of the database. AsyncTask is inherited without
-    // any types (Void) since doInBackground does not need any data to execute.
+    // This is called upon creation of the database only.
+    // AsyncTask is inherited without any types (Void) since the method doInBackground() does not need any parameter to execute.
     private static class PopulateDBAsyncTask extends AsyncTask<Void, Void, Void> {
 
         // We don't have a movieDAO member variable in MovieDatabase class (see MovieDatabase class javadocs comment)
@@ -90,6 +91,7 @@ public abstract class MovieDatabase extends RoomDatabase {
         // This is pretty much self-explanatory else re-enroll to Dean Mitch's OOP.
         private static void insertMovies(MovieDAO movieDAO) throws Exception{
 
+            // Create a Locale for the SimpleDateFormat's constructor with arguments of language and country.
             Locale locale = new Locale("en", "ph");
 
             // new Movie(String title, String description, String imageFilename, Date releasedAt, int timelinePosition, float rating)
