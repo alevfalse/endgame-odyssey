@@ -1,14 +1,17 @@
 package com.enhanced.endgameodyssey;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         // We do not call new ViewModel() because that would just create a new instance of ViewModel
         // every time this activity is created. We don't want that, instead, we want to retrieve
-        // the same data from the same instance of ViewModel. stead we ask the Android system for the ViewModel.
+        // the same data from the same instance of ViewModel. Instead we ask the Android system for the ViewModel.
         // It knows when it has to create a new ViewModel instance or provide an existing instance.
         viewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
 
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             // is destroyed this will not hold a reference to this activity anymore.
             @Override
             public void onChanged(List<Movie> movies) {
-                adapter.setMovies(movies);
+                adapter.submitList(movies);
             }
         };
 
@@ -85,6 +88,40 @@ public class MainActivity extends AppCompatActivity {
         // or switched to a different activity, it will automatically clean up the reference to the activity
         // which can help avoid memory leaks and crashes.
         viewModel.getAllMovies().observe(this, observer);
+
+        // Here we attach an ItemTouchHelper to our RecyclerView. We passed an ItemTouchHelper.SimpleCallback with 0
+        // as its drag directions to disable dragging, and ItemTouchHelper.LEFT to only support swiping of items to the left.
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                Movie movie = adapter.getMovieAt(position);
+                viewMovieDetails(movie);
+                adapter.notifyItemChanged(position);
+            }
+
+            // We check first if the movie being swiped is the current movie to watch or is already watched
+            // else do not allow the swipe to happen.
+            @Override
+            public int getSwipeDirs(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                Movie movie = adapter.getMovieAt(viewHolder.getAdapterPosition());
+                if (movie.isCurrent()) {
+                    return super.getSwipeDirs(recyclerView, viewHolder);
+                }
+                Toast.makeText(MainActivity.this, "You haven't unlocked that movie yet.", Toast.LENGTH_SHORT).show();
+                return 0;
+            }
+
+            @Override
+            public float getSwipeThreshold(@NonNull RecyclerView.ViewHolder viewHolder) {
+                return 0.25f;
+            }
+        }).attachToRecyclerView(recyclerView);
 
         // Set the MovieAdapter's OnItemClickListener member variable and pass an anonymous implementation of
         // the OnItemClickListener interface so that the adapter can know what it will do whenever an item is clicked.
@@ -97,18 +134,7 @@ public class MainActivity extends AppCompatActivity {
             // implementation for for each movie item clicked.
             @Override
             public void onItemClick(Movie movie) {
-                Intent intent = new Intent(MainActivity.this, MovieDetailsActivity.class);
-
-                intent.putExtra(MovieDetailsActivity.EXTRA_ID, movie.getId());
-                intent.putExtra(MovieDetailsActivity.EXTRA_TITLE, movie.getTitle());
-                intent.putExtra(MovieDetailsActivity.EXTRA_DESCRIPTION, movie.getDescription());
-                intent.putExtra(MovieDetailsActivity.EXTRA_IMAGE_FILENAME, movie.getImageFilename());
-                intent.putExtra(MovieDetailsActivity.EXTRA_RELEASE_DATE, movie.getReleaseDate());
-                intent.putExtra(MovieDetailsActivity.EXTRA_TIMELINE_POSITION, movie.getTimelinePosition());
-                intent.putExtra(MovieDetailsActivity.EXTRA_RATING, movie.getRating());
-                intent.putExtra(MovieDetailsActivity.EXTRA_WATCHED, movie.isWatched());
-
-                startActivityForResult(intent, WATCH_MOVIE_REQUEST);
+                viewMovieDetails(movie);
             }
         });
 
@@ -118,23 +144,56 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // If the button is pressed
         if (requestCode == WATCH_MOVIE_REQUEST && resultCode == RESULT_OK) {
+
             int id = data.getIntExtra(MovieDetailsActivity.EXTRA_ID, -1);
+            int timelinePosition = data.getIntExtra(MovieDetailsActivity.EXTRA_TIMELINE_POSITION, -1);
             boolean isWatched = data.getBooleanExtra(MovieDetailsActivity.EXTRA_WATCHED, false);
 
-            System.out.println("ID: " + id + " | isWatched: " + isWatched);
+            if (id == -1 || timelinePosition == -1) return;
+
+            // If the movie is not yet watched
             if (!isWatched) {
+                // Set it to watched
                 viewModel.watch(id);
-                if (id < 22) {
+
+                // Set the next movie as the current movie to watch if not last movie
+                if (timelinePosition < 22) {
                     viewModel.setAsCurrentMovie(id+1);
+                    Toast.makeText(this, "Marked as WATCHED", Toast.LENGTH_SHORT).show();
+                } else if (timelinePosition == 22) {
+                    viewModel.unwatchAllMovies();
+                    viewModel.setAsCurrentMovie(1);
+                    Toast.makeText(this, "Snap!", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(this, "Marked as WATCHED", Toast.LENGTH_SHORT).show();
+
+            // Set the movie as unwatched and as the current movie to watch
             } else {
                 viewModel.unwatch(id);
+                viewModel.setAsCurrentMovie(id+1);
                 Toast.makeText(this, "Marked as UNWATCHED", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(this, "Haven't watched it yet?", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void viewMovieDetails(Movie movie) {
+
+        if (movie.isCurrent()) {
+            Intent intent = new Intent(MainActivity.this, MovieDetailsActivity.class);
+
+            intent.putExtra(MovieDetailsActivity.EXTRA_ID, movie.getId());
+            intent.putExtra(MovieDetailsActivity.EXTRA_TITLE, movie.getTitle());
+            intent.putExtra(MovieDetailsActivity.EXTRA_DESCRIPTION, movie.getDescription());
+            intent.putExtra(MovieDetailsActivity.EXTRA_IMAGE_FILENAME, movie.getImageFilename());
+            intent.putExtra(MovieDetailsActivity.EXTRA_RELEASE_DATE, movie.getReleaseDate());
+            intent.putExtra(MovieDetailsActivity.EXTRA_TIMELINE_POSITION, movie.getTimelinePosition());
+            intent.putExtra(MovieDetailsActivity.EXTRA_RATING, movie.getRating());
+            intent.putExtra(MovieDetailsActivity.EXTRA_WATCHED, movie.isWatched());
+
+            startActivityForResult(intent, WATCH_MOVIE_REQUEST);
+        } else if (!movie.isWatched()) {
+            Toast.makeText(MainActivity.this, "You haven't unlocked that movie yet.", Toast.LENGTH_SHORT).show();
         }
     }
 }

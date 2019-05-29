@@ -5,22 +5,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * This is MovieAdapter class which extends the RecyclerView.Adapter.
- * We pass the MovieHolder so that the RecyclerView knows that it is the ViewHolder we want to use.
+ * This is MovieAdapter class which extends the ListAdapter.
+ * We pass the Movie class to set the type of data it will hold and MovieHolder
+ * so knows that it knows it is the ViewHolder we want to use.
  */
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
+public class MovieAdapter extends ListAdapter<Movie, MovieAdapter.MovieHolder> {
+    private OnItemClickListener clickListener;
 
-    private List<Movie> movies = new ArrayList<>();
-    private OnItemClickListener listener;
+    public MovieAdapter() {
+        super(DIFF_CALLBACK);
+    }
+
+    private static final DiffUtil.ItemCallback<Movie> DIFF_CALLBACK = new DiffUtil.ItemCallback<Movie>() {
+        // Check if the data source contains the same items.
+        @Override
+        public boolean areItemsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+
+        // Check if the items' individual properties are the same.
+        @Override
+        public boolean areContentsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
+            return oldItem.isWatched() == newItem.isWatched() &&
+                   oldItem.isCurrent() == newItem.isCurrent();
+        }
+    };
 
     // This is where we create and return the MovieHolder that will the hold the items in our RecyclerView.
     // We then set the layout that we want to use for the items in our RecyclerView.
@@ -40,7 +56,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     // We set the text of the views of the MovieHolder based on its position in the RecyclerView.
     @Override
     public void onBindViewHolder(@NonNull MovieHolder holder, int position) {
-        Movie movie = movies.get(position);
+
+        // getItem() is a ListAdapter method
+        Movie movie = getItem(position);
 
         holder.textViewTitle.setText(movie.getTitle());
         holder.textViewDescription.setText(movie.getDescription());
@@ -65,18 +83,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         }
     }
 
-    // Here we have to return how many itemViews we want to display in our RecyclerView.
-    // We want to display as many items as there are in our movies ArrayList.
-    @Override
-    public int getItemCount() {
-        return this.movies.size();
-    }
-
-    // In the MainActivity, we observe the LiveData and on the onChange callback, we pass a
-    // List of Movies and this is the method used to get this List of movies into the RecyclerView.
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
-        notifyDataSetChanged(); // We notify the Adapter that it has to draw the layout
+    public Movie getMovieAt(int position) {
+        return getItem(position);
     }
 
     // This class will hold the views in the RecyclerView which in this case are the CardViews of movie_item.
@@ -105,20 +113,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
                 public void onClick(View v) {
                     int position = getAdapterPosition();
 
-                    // Make sure that the member variable listener is set and that the adapter returns
-                    // a valid position before calling the listener's onItemClick method.
-                    if (listener != null && position != RecyclerView.NO_POSITION) {
-                        Movie movie = movies.get(position);
+                    // Make sure that the member variable clickListener is set and that the adapter returns
+                    // a valid position before calling the clickListener's onItemClick method.
+                    if (clickListener != null && position != RecyclerView.NO_POSITION) {
 
-                        // Check if the movie is the current movie to be watched before letting the user view it.
-                        if (movie.isCurrent()) {
-                            // Execute the listener's onItemClick method which was implemented in the MainActivity
-                            listener.onItemClick(movies.get(position));
-
-                        } else if (!movie.isWatched()){
-                            Toast.makeText(itemView.getContext(), "You haven't unlocked that movie yet.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                        // Execute the clickListener's onItemClick method which was implemented in the MainActivity
+                        clickListener.onItemClick(getItem(position));
                     }
                 }
             });
@@ -126,7 +126,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     }
 
     // Whatever implements this interface also has to implement the onItemClick method to make sure
-    // that whenever we have an OnTimeClickListener for our MovieAdapter, the listener also has the onItemClick() method.
+    // that whenever we have an OnTimeClickListener for our MovieAdapter, the clickListener also has the onItemClick() method.
     // We implement this interface in the MainActivity allowing us to call this method on the MainActivity and pass the movie to it.
     // This is set to interface so that the implementor has the power to perform whatever actions they want whenever an item is clicked.
     public interface OnItemClickListener {
@@ -134,9 +134,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     }
 
     // We can use the OnItemClickListener instance provided by whatever implemented its interface
-    // to set this MovieAdapter's member variable listener and call the onItemClick method on it
+    // to set this MovieAdapter's member variable clickListener and call the onItemClick method on it
     // which was implemented as well in the MainActivity as well.
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
+    public void setOnItemClickListener(OnItemClickListener clickListener) {
+        this.clickListener = clickListener;
     }
 }

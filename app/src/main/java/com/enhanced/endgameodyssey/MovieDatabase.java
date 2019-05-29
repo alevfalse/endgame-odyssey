@@ -26,7 +26,7 @@ import java.util.Locale;
  *     We can now then get a single instance of MovieDatabase using the getInstance() synchronized method and then
  *     access the method movieDAO from it.
  */
-@Database(entities = Movie.class, version = 3)
+@Database(entities = Movie.class, version = 4)
 public abstract class MovieDatabase extends RoomDatabase {
 
     private static MovieDatabase instance; // Singleton
@@ -128,6 +128,196 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.iron_man1_releasedAt),
                     Integer.parseInt(mContext.getString(R.string.iron_man1_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.iron_man1_rating)),
+                    false));
+
+            // Iron Man 2
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.iron_man2_title),
+                    mContext.getString(R.string.iron_man2_description),
+                    mContext.getString(R.string.iron_man2_image_filename),
+                    mContext.getString(R.string.iron_man2_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.iron_man2_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.iron_man2_rating)),
+                    false));
+
+            // The Incredible Hulk
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.hulk_title),
+                    mContext.getString(R.string.hulk_description),
+                    mContext.getString(R.string.hulk_image_filename),
+                    mContext.getString(R.string.hulk_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.hulk_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.hulk_rating)),
+                    false));
+
+            // Thor
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.thor1_title),
+                    mContext.getString(R.string.thor1_description),
+                    mContext.getString(R.string.thor1_image_filename),
+                    mContext.getString(R.string.thor1_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.thor1_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.thor1_rating)),
+                    false));
+
+            // The Avengers
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.avengers1_title),
+                    mContext.getString(R.string.avengers1_description),
+                    mContext.getString(R.string.avengers1_image_filename),
+                    mContext.getString(R.string.avengers1_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.avengers1_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.avengers1_rating)),
+                    false));
+
+            // Iron Man 3
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.iron_man3_title),
+                    mContext.getString(R.string.iron_man3_description),
+                    mContext.getString(R.string.iron_man3_image_filename),
+                    mContext.getString(R.string.iron_man3_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.iron_man3_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.iron_man3_rating)),
+                    false));
+
+            // Thor: The Dark World
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.thor2_title),
+                    mContext.getString(R.string.thor2_description),
+                    mContext.getString(R.string.thor2_image_filename),
+                    mContext.getString(R.string.thor2_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.thor2_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.thor2_rating)),
+                    false));
+
+            // Captain America: The Winter Soldier
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.captain_america2_title),
+                    mContext.getString(R.string.captain_america2_description),
+                    mContext.getString(R.string.captain_america2_image_filename),
+                    mContext.getString(R.string.captain_america2_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.captain_america2_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.captain_america2_rating)),
+                    false));
+
+            // Guardians of the Galaxy
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.guardians1_title),
+                    mContext.getString(R.string.guardians1_description),
+                    mContext.getString(R.string.guardians1_image_filename),
+                    mContext.getString(R.string.guardians1_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.guardians1_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.guardians1_rating)),
+                    false));
+
+            // Guardians of the Galaxy Vol. 2
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.guardians2_title),
+                    mContext.getString(R.string.guardians2_description),
+                    mContext.getString(R.string.guardians2_image_filename),
+                    mContext.getString(R.string.guardians2_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.guardians2_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.guardians2_rating)),
+                    false));
+
+            // Avengers: Age of Ultron
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.avengers2_title),
+                    mContext.getString(R.string.avengers2_description),
+                    mContext.getString(R.string.avengers2_image_filename),
+                    mContext.getString(R.string.avengers2_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.avengers2_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.avengers2_rating)),
+                    false));
+
+            // Ant-Man
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.ant_man1_title),
+                    mContext.getString(R.string.ant_man1_description),
+                    mContext.getString(R.string.ant_man1_image_filename),
+                    mContext.getString(R.string.ant_man1_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.ant_man1_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.ant_man1_rating)),
+                    false));
+
+            // Captain America: Civil War
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.captain_america3_title),
+                    mContext.getString(R.string.captain_america3_description),
+                    mContext.getString(R.string.captain_america3_image_filename),
+                    mContext.getString(R.string.captain_america3_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.captain_america3_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.captain_america3_rating)),
+                    false));
+
+            // Black Panther
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.black_panther_title),
+                    mContext.getString(R.string.black_panther_description),
+                    mContext.getString(R.string.black_panther_image_filename),
+                    mContext.getString(R.string.black_panther_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.black_panther_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.black_panther_rating)),
+                    false));
+
+            // Spider-Man: Homecoming
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.spider_man_title),
+                    mContext.getString(R.string.spider_man_description),
+                    mContext.getString(R.string.spider_man_image_filename),
+                    mContext.getString(R.string.spider_man_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.spider_man_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.spider_man_rating)),
+                    false));
+
+            // Doctor Strange
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.doctor_strange_title),
+                    mContext.getString(R.string.doctor_strange_description),
+                    mContext.getString(R.string.doctor_strange_image_filename),
+                    mContext.getString(R.string.doctor_strange_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.doctor_strange_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.doctor_strange_rating)),
+                    false));
+
+            // Thor: Ragnarok
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.thor3_title),
+                    mContext.getString(R.string.thor3_description),
+                    mContext.getString(R.string.thor3_image_filename),
+                    mContext.getString(R.string.thor3_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.thor3_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.thor3_rating)),
+                    false));
+
+            // Ant-Man and the Wasp
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.ant_man2_title),
+                    mContext.getString(R.string.ant_man2_description),
+                    mContext.getString(R.string.ant_man2_image_filename),
+                    mContext.getString(R.string.ant_man2_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.ant_man2_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.ant_man2_rating)),
+                    false));
+
+            // Avengers: Infinity War
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.avengers3_title),
+                    mContext.getString(R.string.avengers3_description),
+                    mContext.getString(R.string.avengers3_image_filename),
+                    mContext.getString(R.string.avengers3_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.avengers3_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.avengers3_rating)),
+                    false));
+
+            // Avengers: Endgame
+            movieDAO.insert(new Movie(
+                    mContext.getString(R.string.avengers4_title),
+                    mContext.getString(R.string.avengers4_description),
+                    mContext.getString(R.string.avengers4_image_filename),
+                    mContext.getString(R.string.avengers4_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.avengers4_timelinePosition)),
+                    Float.parseFloat(mContext.getString(R.string.avengers4_rating)),
                     false));
         }
     }

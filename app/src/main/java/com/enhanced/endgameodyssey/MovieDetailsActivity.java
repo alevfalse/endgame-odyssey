@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.r0adkll.slidr.Slidr;
+
 public class MovieDetailsActivity extends AppCompatActivity {
 
     public static final String EXTRA_ID = "com.enhanced.endgameodyssey.EXTRA_ID";
@@ -54,8 +56,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         imageViewWatchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setMovieAsWatched();
-                System.out.println("");
+                updateMovie();
             }
         });
     }
@@ -70,18 +71,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     // TODO: Add comment
-    private void setMovieAsWatched() {
+    private void updateMovie() {
         Intent data = new Intent();
 
         int id = getIntent().getIntExtra(EXTRA_ID, -1);
+
         if (id != -1) {
             data.putExtra(EXTRA_ID, id);
         }
 
+        int timelinePosition = getIntent().getIntExtra(EXTRA_TIMELINE_POSITION, -1);
         boolean isWatched = getIntent().getBooleanExtra(EXTRA_WATCHED, false);
-        data.putExtra(EXTRA_WATCHED, isWatched);
 
-        System.out.println("ID: " + id + " | isWatched: " + isWatched);
+        data.putExtra(EXTRA_WATCHED, isWatched);
+        data.putExtra(EXTRA_TIMELINE_POSITION, timelinePosition);
 
         setResult(RESULT_OK, data);
         finish();

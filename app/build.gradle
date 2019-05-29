@@ -42,4 +42,7 @@ dependencies {
     // Room components
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // Activity slide animations
+    implementation 'com.r0adkll:slidableactivity:2.0.6'
 }

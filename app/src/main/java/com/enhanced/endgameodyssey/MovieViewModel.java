@@ -54,7 +54,7 @@ public class MovieViewModel extends AndroidViewModel {
         repository.setAsCurrentMovie(id);
     }
 
-    public void unwatchAllMovies(Movie movie) {
+    public void unwatchAllMovies() {
         repository.unwatchAllMovies();
     }
 
