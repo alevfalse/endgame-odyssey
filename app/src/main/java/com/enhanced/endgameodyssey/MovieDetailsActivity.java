@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.r0adkll.slidr.Slidr;
-
 public class MovieDetailsActivity extends AppCompatActivity {
 
     public static final String EXTRA_ID = "com.enhanced.endgameodyssey.EXTRA_ID";
