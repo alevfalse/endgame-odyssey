@@ -2,17 +2,24 @@ package com.enhanced.endgameodyssey;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
 
     private MovieViewModel viewModel;
 
+    private DrawerLayout drawer;
+
+    private ProgressBar progressBar;
+    private TextView textViewPercent;
+    private TextView textViewWatched;
+    private TextView textViewDuration;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
         // Every RecyclerView needs a LayoutManger and so we pass an anonymous instance of LinearLayoutManager
         // where we pass the Context. The LinearLayoutManager takes care of displaying the vertical stack of movie items.
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
         // Since we have set the RecyclerView's height and width to match parent which is the MainActivity,
         // we can then set this true for more efficiency.
         recyclerView.setHasFixedSize(true);
@@ -77,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Movie> movies) {
                 adapter.submitList(movies);
+                updateProgress(movies);
             }
         };
 
@@ -136,6 +153,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Replace default action bar with our custom toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawer = findViewById(R.id.draw_layout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        progressBar = findViewById(R.id.progress_bar);
+        textViewPercent = findViewById(R.id.text_view_percent);
+        textViewWatched = findViewById(R.id.text_view_watched_count);
+        textViewDuration = findViewById(R.id.text_view_duration);
     }
 
     @Override
@@ -175,6 +208,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void viewMovieDetails(Movie movie) {
 
         if (movie.isCurrent()) {
@@ -188,10 +230,35 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(MovieDetailsActivity.EXTRA_TIMELINE_POSITION, movie.getTimelinePosition());
             intent.putExtra(MovieDetailsActivity.EXTRA_RATING, movie.getRating());
             intent.putExtra(MovieDetailsActivity.EXTRA_WATCHED, movie.isWatched());
+            intent.putExtra(MovieDetailsActivity.EXTRA_RUNTIME_MINUTES, movie.getRuntimeMinutes());
 
             startActivityForResult(intent, WATCH_MOVIE_REQUEST);
         } else if (!movie.isWatched()) {
             Toast.makeText(MainActivity.this, "You haven't unlocked that movie yet.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void updateProgress(List<Movie> movies) {
+
+        int watchedCount = 0;
+        int minutesLeft = 0;
+
+        for (Movie movie : movies) {
+            if (movie.isWatched()) {
+                watchedCount++;
+            } else {
+                minutesLeft += movie.getRuntimeMinutes();
+            }
+        }
+
+        int percent = (watchedCount * 100) / 22;
+
+        System.out.println("Watched Count: " + watchedCount);
+        System.out.println("Watched Percent: " + percent);
+
+        progressBar.setProgress(percent);
+        textViewPercent.setText(percent + "%");
+        textViewWatched.setText(String.valueOf(watchedCount));
+        textViewDuration.setText(MovieDetailsActivity.getTimeString(minutesLeft) + " left");
     }
 }

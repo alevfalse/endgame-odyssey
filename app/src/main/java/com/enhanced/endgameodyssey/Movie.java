@@ -24,6 +24,7 @@ public class Movie {
     private String imageFilename;
     private String releaseDate;
 
+    private int runtimeMinutes;
     private int timelinePosition;
     private float rating;
 
@@ -31,10 +32,11 @@ public class Movie {
     private boolean watched;
     private boolean current;
 
-    public Movie(String title, String description, String imageFilename, String releaseDate, int timelinePosition, float rating, boolean current) {
+    public Movie(String title, String description, String imageFilename, String releaseDate, int runtimeMinutes, int timelinePosition, float rating, boolean current) {
         this.title = title;
         this.description = description;
         this.releaseDate = releaseDate;
+        this.runtimeMinutes = runtimeMinutes;
         this.timelinePosition = timelinePosition;
         this.rating = rating;
         this.imageFilename = imageFilename;
@@ -86,5 +88,9 @@ public class Movie {
 
     public boolean isCurrent() {
         return current;
+    }
+
+    public int getRuntimeMinutes() {
+        return runtimeMinutes;
     }
 }

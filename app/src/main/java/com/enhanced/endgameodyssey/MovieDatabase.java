@@ -12,21 +12,21 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.Locale;
 
 /**
- *     This is the singleton MovieDatabase abstract class that Room will subclass.
- *
- *     A Room database can have multiple entities (tables) with each entity having its own corresponding
- *     Data Access Object, therefore a Room database can have multiple DAO's but since we only have one
- *     entity (Movie), we only have one Data Access Object in this class-- MovieDAO.
- *
- *     This class doesn't have a MovieDAO member variable. We can access the Movie's DAO using the abstract method movieDAO()
- *     which we'll call using the database's single instance. But since this class is an abstract class, we cannot create
- *     an instance of the MovieDatabase using the 'new' keyword. That is why we have annotated this class with @Database
- *     so that Room will subclass MovieDatabase implement the class for us.
- *
- *     We can now then get a single instance of MovieDatabase using the getInstance() synchronized method and then
- *     access the method movieDAO from it.
+ * This is the singleton MovieDatabase abstract class that Room will subclass.
+ * <p>
+ * A Room database can have multiple entities (tables) with each entity having its own corresponding
+ * Data Access Object, therefore a Room database can have multiple DAO's but since we only have one
+ * entity (Movie), we only have one Data Access Object in this class-- MovieDAO.
+ * <p>
+ * This class doesn't have a MovieDAO member variable. We can access the Movie's DAO using the abstract method movieDAO()
+ * which we'll call using the database's single instance. But since this class is an abstract class, we cannot create
+ * an instance of the MovieDatabase using the 'new' keyword. That is why we have annotated this class with @Database
+ * so that Room will subclass MovieDatabase implement the class for us.
+ * <p>
+ * We can now then get a single instance of MovieDatabase using the getInstance() synchronized method and then
+ * access the method movieDAO from it.
  */
-@Database(entities = Movie.class, version = 4)
+@Database(entities = Movie.class, version = 5)
 public abstract class MovieDatabase extends RoomDatabase {
 
     private static MovieDatabase instance; // Singleton
@@ -91,7 +91,7 @@ public abstract class MovieDatabase extends RoomDatabase {
         }
 
         // This is pretty much self-explanatory otherwise re-enroll to Dean Mitch's OOP.
-        private static void insertMovies(MovieDAO movieDAO) throws Exception{
+        private static void insertMovies(MovieDAO movieDAO) throws Exception {
 
             // Create a Locale for the SimpleDateFormat's constructor with arguments of language and country.
             Locale locale = new Locale("en", "ph");
@@ -106,6 +106,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.captain_america1_description),
                     mContext.getString(R.string.captain_america1_image_filename),
                     mContext.getString(R.string.captain_america1_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.captain_america1_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.captain_america1_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.captain_america1_rating)),
                     true));
@@ -116,6 +117,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.captain_marvel_description),
                     mContext.getString(R.string.captain_marvel_image_filename),
                     mContext.getString(R.string.captain_marvel_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.captain_marvel_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.captain_marvel_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.captain_marvel_rating)),
                     false));
@@ -126,6 +128,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.iron_man1_description),
                     mContext.getString(R.string.iron_man1_image_filename),
                     mContext.getString(R.string.iron_man1_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.iron_man1_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.iron_man1_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.iron_man1_rating)),
                     false));
@@ -136,6 +139,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.iron_man2_description),
                     mContext.getString(R.string.iron_man2_image_filename),
                     mContext.getString(R.string.iron_man2_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.iron_man2_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.iron_man2_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.iron_man2_rating)),
                     false));
@@ -146,6 +150,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.hulk_description),
                     mContext.getString(R.string.hulk_image_filename),
                     mContext.getString(R.string.hulk_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.hulk_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.hulk_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.hulk_rating)),
                     false));
@@ -156,6 +161,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.thor1_description),
                     mContext.getString(R.string.thor1_image_filename),
                     mContext.getString(R.string.thor1_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.thor1_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.thor1_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.thor1_rating)),
                     false));
@@ -166,6 +172,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.avengers1_description),
                     mContext.getString(R.string.avengers1_image_filename),
                     mContext.getString(R.string.avengers1_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.avengers1_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.avengers1_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.avengers1_rating)),
                     false));
@@ -176,6 +183,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.iron_man3_description),
                     mContext.getString(R.string.iron_man3_image_filename),
                     mContext.getString(R.string.iron_man3_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.iron_man3_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.iron_man3_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.iron_man3_rating)),
                     false));
@@ -186,6 +194,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.thor2_description),
                     mContext.getString(R.string.thor2_image_filename),
                     mContext.getString(R.string.thor2_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.thor2_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.thor2_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.thor2_rating)),
                     false));
@@ -196,6 +205,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.captain_america2_description),
                     mContext.getString(R.string.captain_america2_image_filename),
                     mContext.getString(R.string.captain_america2_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.captain_america2_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.captain_america2_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.captain_america2_rating)),
                     false));
@@ -206,6 +216,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.guardians1_description),
                     mContext.getString(R.string.guardians1_image_filename),
                     mContext.getString(R.string.guardians1_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.guardians1_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.guardians1_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.guardians1_rating)),
                     false));
@@ -216,6 +227,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.guardians2_description),
                     mContext.getString(R.string.guardians2_image_filename),
                     mContext.getString(R.string.guardians2_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.guardians2_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.guardians2_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.guardians2_rating)),
                     false));
@@ -226,6 +238,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.avengers2_description),
                     mContext.getString(R.string.avengers2_image_filename),
                     mContext.getString(R.string.avengers2_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.avengers2_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.avengers2_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.avengers2_rating)),
                     false));
@@ -236,6 +249,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.ant_man1_description),
                     mContext.getString(R.string.ant_man1_image_filename),
                     mContext.getString(R.string.ant_man1_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.ant_man1_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.ant_man1_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.ant_man1_rating)),
                     false));
@@ -246,6 +260,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.captain_america3_description),
                     mContext.getString(R.string.captain_america3_image_filename),
                     mContext.getString(R.string.captain_america3_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.captain_america3_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.captain_america3_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.captain_america3_rating)),
                     false));
@@ -256,6 +271,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.black_panther_description),
                     mContext.getString(R.string.black_panther_image_filename),
                     mContext.getString(R.string.black_panther_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.black_panther_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.black_panther_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.black_panther_rating)),
                     false));
@@ -266,6 +282,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.spider_man_description),
                     mContext.getString(R.string.spider_man_image_filename),
                     mContext.getString(R.string.spider_man_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.spider_man_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.spider_man_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.spider_man_rating)),
                     false));
@@ -276,6 +293,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.doctor_strange_description),
                     mContext.getString(R.string.doctor_strange_image_filename),
                     mContext.getString(R.string.doctor_strange_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.doctor_strange_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.doctor_strange_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.doctor_strange_rating)),
                     false));
@@ -286,6 +304,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.thor3_description),
                     mContext.getString(R.string.thor3_image_filename),
                     mContext.getString(R.string.thor3_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.thor3_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.thor3_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.thor3_rating)),
                     false));
@@ -296,6 +315,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.ant_man2_description),
                     mContext.getString(R.string.ant_man2_image_filename),
                     mContext.getString(R.string.ant_man2_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.ant_man2_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.ant_man2_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.ant_man2_rating)),
                     false));
@@ -306,6 +326,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.avengers3_description),
                     mContext.getString(R.string.avengers3_image_filename),
                     mContext.getString(R.string.avengers3_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.avengers3_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.avengers3_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.avengers3_rating)),
                     false));
@@ -316,6 +337,7 @@ public abstract class MovieDatabase extends RoomDatabase {
                     mContext.getString(R.string.avengers4_description),
                     mContext.getString(R.string.avengers4_image_filename),
                     mContext.getString(R.string.avengers4_releasedAt),
+                    Integer.parseInt(mContext.getString(R.string.avengers4_durationMinutes)),
                     Integer.parseInt(mContext.getString(R.string.avengers4_timelinePosition)),
                     Float.parseFloat(mContext.getString(R.string.avengers4_rating)),
                     false));

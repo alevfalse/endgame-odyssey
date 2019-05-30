@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 /**
  * This is MovieAdapter class which extends the ListAdapter.
  * We pass the Movie class to set the type of data it will hold and MovieHolder

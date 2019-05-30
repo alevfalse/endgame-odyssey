@@ -1,11 +1,15 @@
 <resources>
     <string name="app_name">Endgame Odyssey</string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="captain_america1_title">Captain America: The First Avenger</string>
     <string name="captain_america1_description">Steve Rogers, a rejected military soldier transforms into Captain America after taking a dose of a "Super-Soldier serum". But being Captain America comes at a price as he attempts to take down a war monger and a terrorist organization.</string>
     <string name="captain_america1_image_filename">captain_america1</string>
     <string name="captain_america1_releasedAt">July 22, 2011</string>
     <string name="captain_america1_rating">6.9</string>
+    <string name="captain_america1_durationMinutes">124</string>
     <string name="captain_america1_timelinePosition">1</string>
 
     <string name="captain_marvel_title">Captain Marvel</string>
@@ -13,6 +17,7 @@
     <string name="captain_marvel_image_filename">captain_marvel</string>
     <string name="captain_marvel_releasedAt">March 08, 2019</string>
     <string name="captain_marvel_rating">7.1</string>
+    <string name="captain_marvel_durationMinutes">123</string>
     <string name="captain_marvel_timelinePosition">2</string>
 
     <string name="iron_man1_title">Iron Man</string>
@@ -20,6 +25,7 @@
     <string name="iron_man1_image_filename">iron_man1</string>
     <string name="iron_man1_releasedAt">May 02, 2008</string>
     <string name="iron_man1_rating">7.9</string>
+    <string name="iron_man1_durationMinutes">126</string>
     <string name="iron_man1_timelinePosition">3</string>
 
     <string name="iron_man2_title">Iron Man 2</string>
@@ -27,6 +33,7 @@
     <string name="iron_man2_image_filename">iron_man2</string>
     <string name="iron_man2_releasedAt">May 07, 2010</string>
     <string name="iron_man2_rating">7.0</string>
+    <string name="iron_man2_durationMinutes">124</string>
     <string name="iron_man2_timelinePosition">4</string>
 
     <string name="hulk_title">The Incredible Hulk</string>
@@ -34,6 +41,7 @@
     <string name="hulk_image_filename">hulk</string>
     <string name="hulk_releasedAt">June 13, 2008</string>
     <string name="hulk_rating">6.7</string>
+    <string name="hulk_durationMinutes">112</string>
     <string name="hulk_timelinePosition">5</string>
 
     <string name="thor1_title">Thor</string>
@@ -41,6 +49,7 @@
     <string name="thor1_image_filename">thor1</string>
     <string name="thor1_releasedAt">May 06, 2011</string>
     <string name="thor1_rating">7.0</string>
+    <string name="thor1_durationMinutes">115</string>
     <string name="thor1_timelinePosition">6</string>
 
     <string name="avengers1_title">The Avengers</string>
@@ -48,6 +57,7 @@
     <string name="avengers1_image_filename">avengers1</string>
     <string name="avengers1_releasedAt">May 04, 2012</string>
     <string name="avengers1_rating">8.1</string>
+    <string name="avengers1_durationMinutes">143</string>
     <string name="avengers1_timelinePosition">7</string>
 
     <string name="iron_man3_title">Iron Man 3</string>
@@ -55,6 +65,7 @@
     <string name="iron_man3_image_filename">iron_man3</string>
     <string name="iron_man3_releasedAt">May 03, 2013</string>
     <string name="iron_man3_rating">7.2</string>
+    <string name="iron_man3_durationMinutes">130</string>
     <string name="iron_man3_timelinePosition">8</string>
 
     <string name="thor2_title">Thor: The Dark World</string>
@@ -62,6 +73,7 @@
     <string name="thor2_image_filename">thor2</string>
     <string name="thor2_releasedAt">November 08, 2013</string>
     <string name="thor2_rating">6.9</string>
+    <string name="thor2_durationMinutes">112</string>
     <string name="thor2_timelinePosition">9</string>
 
     <string name="captain_america2_title">Captain America: The Winter Soldier</string>
@@ -69,6 +81,7 @@
     <string name="captain_america2_image_filename">captain_america2</string>
     <string name="captain_america2_releasedAt">April 04, 2014</string>
     <string name="captain_america2_rating">7.8</string>
+    <string name="captain_america2_durationMinutes">136</string>
     <string name="captain_america2_timelinePosition">10</string>
 
     <string name="guardians1_title">Guardians of the Galaxy</string>
@@ -76,6 +89,7 @@
     <string name="guardians1_image_filename">guardians1</string>
     <string name="guardians1_releasedAt">August 01, 2014</string>
     <string name="guardians1_rating">8.1</string>
+    <string name="guardians1_durationMinutes">121</string>
     <string name="guardians1_timelinePosition">11</string>
 
     <string name="guardians2_title">Guardians of the Galaxy Vol. 2</string>
@@ -83,6 +97,7 @@
     <string name="guardians2_image_filename">guardians2</string>
     <string name="guardians2_releasedAt">May 05, 2017</string>
     <string name="guardians2_rating">7.7</string>
+    <string name="guardians2_durationMinutes">136</string>
     <string name="guardians2_timelinePosition">12</string>
 
     <string name="avengers2_title">Avengers: Age of Ultron</string>
@@ -90,6 +105,7 @@
     <string name="avengers2_image_filename">avengers2</string>
     <string name="avengers2_releasedAt">May 01, 2015</string>
     <string name="avengers2_rating">7.3</string>
+    <string name="avengers2_durationMinutes">141</string>
     <string name="avengers2_timelinePosition">13</string>
 
     <string name="ant_man1_title">Ant-Man</string>
@@ -97,6 +113,7 @@
     <string name="ant_man1_image_filename">ant_man1</string>
     <string name="ant_man1_releasedAt">July 17, 2015</string>
     <string name="ant_man1_rating">7.3</string>
+    <string name="ant_man1_durationMinutes">117</string>
     <string name="ant_man1_timelinePosition">14</string>
 
     <string name="captain_america3_title">Captain America: Civil War</string>
@@ -104,6 +121,7 @@
     <string name="captain_america3_image_filename">captain_america3</string>
     <string name="captain_america3_releasedAt">May 06, 2016</string>
     <string name="captain_america3_rating">7.8</string>
+    <string name="captain_america3_durationMinutes">147</string>
     <string name="captain_america3_timelinePosition">15</string>
 
     <string name="black_panther_title">Black Panther</string>
@@ -111,6 +129,7 @@
     <string name="black_panther_image_filename">black_panther</string>
     <string name="black_panther_releasedAt">February 16, 2018</string>
     <string name="black_panther_rating">7.3</string>
+    <string name="black_panther_durationMinutes">134</string>
     <string name="black_panther_timelinePosition">16</string>
 
     <string name="spider_man_title">Spider-Man: Homecoming</string>
@@ -118,6 +137,7 @@
     <string name="spider_man_image_filename">spider_man</string>
     <string name="spider_man_releasedAt">July 07, 2017</string>
     <string name="spider_man_rating">7.5</string>
+    <string name="spider_man_durationMinutes">133</string>
     <string name="spider_man_timelinePosition">17</string>
 
     <string name="doctor_strange_title">Doctor Strange</string>
@@ -125,6 +145,7 @@
     <string name="doctor_strange_image_filename">doctor_strange</string>
     <string name="doctor_strange_releasedAt">November 04, 2016</string>
     <string name="doctor_strange_rating">7.5</string>
+    <string name="doctor_strange_durationMinutes">115</string>
     <string name="doctor_strange_timelinePosition">18</string>
 
     <string name="thor3_title">Thor: Ragnarok</string>
@@ -132,6 +153,7 @@
     <string name="thor3_image_filename">thor3</string>
     <string name="thor3_releasedAt">November 03, 2017</string>
     <string name="thor3_rating">7.9</string>
+    <string name="thor3_durationMinutes">130</string>
     <string name="thor3_timelinePosition">19</string>
 
     <string name="ant_man2_title">Ant-Man and the Wasp</string>
@@ -139,6 +161,7 @@
     <string name="ant_man2_image_filename">ant_man2</string>
     <string name="ant_man2_releasedAt">November 03, 2017</string>
     <string name="ant_man2_rating">7.1</string>
+    <string name="ant_man2_durationMinutes">118</string>
     <string name="ant_man2_timelinePosition">20</string>
 
     <string name="avengers3_title">Avengers: Infinity War</string>
@@ -146,6 +169,7 @@
     <string name="avengers3_image_filename">avengers3</string>
     <string name="avengers3_releasedAt">April 27, 2018</string>
     <string name="avengers3_rating">8.5</string>
+    <string name="avengers3_durationMinutes">149</string>
     <string name="avengers3_timelinePosition">21</string>
 
     <string name="avengers4_title">Avengers: Endgame</string>
@@ -153,6 +177,7 @@
     <string name="avengers4_image_filename">avengers4</string>
     <string name="avengers4_releasedAt">April 26, 2019</string>
     <string name="avengers4_rating">8.8</string>
+    <string name="avengers4_durationMinutes">181</string>
     <string name="avengers4_timelinePosition">22</string>
 
 </resources>
