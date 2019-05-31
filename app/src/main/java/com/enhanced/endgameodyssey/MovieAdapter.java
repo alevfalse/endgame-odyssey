@@ -1,12 +1,15 @@
 package com.enhanced.endgameodyssey;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,7 +39,7 @@ public class MovieAdapter extends ListAdapter<Movie, MovieAdapter.MovieHolder> {
         @Override
         public boolean areContentsTheSame(@NonNull Movie oldItem, @NonNull Movie newItem) {
             return oldItem.isWatched() == newItem.isWatched() &&
-                   oldItem.isCurrent() == newItem.isCurrent();
+                    oldItem.isCurrent() == newItem.isCurrent();
         }
     };
 
@@ -66,22 +69,16 @@ public class MovieAdapter extends ListAdapter<Movie, MovieAdapter.MovieHolder> {
         holder.textViewDescription.setText(movie.getDescription());
         holder.textViewPosition.setText(String.valueOf(movie.getTimelinePosition()));
 
+        // If the movie is already watched
         if (movie.isWatched()) {
-            System.out.println(movie.getId() + " " + movie.isWatched() +
-                    ": Setting " + movie.getTitle() + " background color to lime green.");
-            holder.itemView.setBackgroundColor(Color.rgb(50,205,50)); // lime green
+            holder.itemView.setBackgroundColor(Color.rgb(50, 205, 50)); // lime green
+
         } else {
-
             if (movie.isCurrent()) {
-                System.out.println(movie.getId() + " " + movie.isWatched() +
-                        ": Setting " + movie.getTitle() + " background color to grey.");
-                holder.itemView.setBackgroundColor(Color.rgb(255,255,255)); // white
+                holder.itemView.setBackgroundColor(Color.rgb(255, 255, 255)); // white
             } else {
-                System.out.println(movie.getId() + " " + movie.isWatched() +
-                        ": Setting " + movie.getTitle() + " background color to grey.");
-                holder.itemView.setBackgroundColor(Color.rgb(105,105,105)); // grey
+                holder.itemView.setBackgroundColor(Color.rgb(105, 105, 105)); // grey
             }
-
         }
     }
 
@@ -107,6 +104,7 @@ public class MovieAdapter extends ListAdapter<Movie, MovieAdapter.MovieHolder> {
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             textViewDescription = itemView.findViewById(R.id.text_view_description);
             textViewPosition = itemView.findViewById(R.id.text_view_position);
+
 
             // Set an anonymous View.OnClickListener for the itemView
             itemView.setOnClickListener(new View.OnClickListener() {

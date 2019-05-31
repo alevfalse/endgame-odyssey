@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Endgame Odyssey</string>
 
+    <string name="locked_movie">You haven\'t unlocked that movie yet.</string>
+    <string name="marked_as_watched">Marked as WATCHED.</string>
+    <string name="marked_as_unwatched">Marked as UNWATCHED.</string>
+    <string name="snap">Snap!</string>
+    <string name="percent">%1$d%%</string>
+    <string name="time_left">%1$s left</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

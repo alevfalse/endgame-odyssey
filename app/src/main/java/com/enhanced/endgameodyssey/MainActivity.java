@@ -1,6 +1,7 @@
 package com.enhanced.endgameodyssey;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int WATCH_MOVIE_REQUEST = 1;
 
+    private LinearLayoutManager linearLayoutManager;
     private MovieViewModel viewModel;
 
     private DrawerLayout drawer;
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         // where we pass the Context. The LinearLayoutManager takes care of displaying the vertical stack of movie items.
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         // Since we have set the RecyclerView's height and width to match parent which is the MainActivity,
         // we can then set this true for more efficiency.
@@ -92,7 +94,11 @@ public class MainActivity extends AppCompatActivity {
             // is destroyed this will not hold a reference to this activity anymore.
             @Override
             public void onChanged(List<Movie> movies) {
+
+                // Submit the list to the adapter and let the ListAdapter class handle the changes and animation
                 adapter.submitList(movies);
+
+                // Update the progress tracker each time something is changed
                 updateProgress(movies);
             }
         };
@@ -128,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 if (movie.isCurrent()) {
                     return super.getSwipeDirs(recyclerView, viewHolder);
                 }
-                Toast.makeText(MainActivity.this, "You haven't unlocked that movie yet.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.locked_movie, Toast.LENGTH_SHORT).show();
                 return 0;
             }
 
@@ -192,18 +198,19 @@ public class MainActivity extends AppCompatActivity {
                 // Set the next movie as the current movie to watch if not last movie
                 if (timelinePosition < 22) {
                     viewModel.setAsCurrentMovie(id+1);
-                    Toast.makeText(this, "Marked as WATCHED", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.marked_as_watched, Toast.LENGTH_SHORT).show();
                 } else if (timelinePosition == 22) {
                     viewModel.unwatchAllMovies();
                     viewModel.setAsCurrentMovie(1);
-                    Toast.makeText(this, "Snap!", Toast.LENGTH_SHORT).show();
+                    linearLayoutManager.scrollToPositionWithOffset(0, 0);
+                    Toast.makeText(this, R.string.snap, Toast.LENGTH_SHORT).show();
                 }
 
             // Set the movie as unwatched and as the current movie to watch
             } else {
                 viewModel.unwatch(id);
                 viewModel.setAsCurrentMovie(id+1);
-                Toast.makeText(this, "Marked as UNWATCHED", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.marked_as_unwatched, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -234,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
 
             startActivityForResult(intent, WATCH_MOVIE_REQUEST);
         } else if (!movie.isWatched()) {
-            Toast.makeText(MainActivity.this, "You haven't unlocked that movie yet.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.locked_movie, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -252,13 +259,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         int percent = (watchedCount * 100) / 22;
-
-        System.out.println("Watched Count: " + watchedCount);
-        System.out.println("Watched Percent: " + percent);
+        String timeLeftString = MovieDetailsActivity.getTimeString(minutesLeft);
 
         progressBar.setProgress(percent);
-        textViewPercent.setText(percent + "%");
+        textViewPercent.setText(getString(R.string.percent, percent));
         textViewWatched.setText(String.valueOf(watchedCount));
-        textViewDuration.setText(MovieDetailsActivity.getTimeString(minutesLeft) + " left");
+        textViewDuration.setText(getString(R.string.time_left, timeLeftString));
     }
 }

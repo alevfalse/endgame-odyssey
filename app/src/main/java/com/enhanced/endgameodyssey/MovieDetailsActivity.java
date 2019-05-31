@@ -46,6 +46,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
         imageViewWatchButton = findViewById(R.id.image_view_watched);
         textViewWatched = findViewById(R.id.text_view_watched);
 
+        if (intent.getIntExtra(EXTRA_TIMELINE_POSITION, -1) == 22) {
+            imageViewWatchButton.setImageResource(R.drawable.infinity_gauntlet);
+        }
+
         // Set the data provided by the MainActivity
         loadImage(intent.getStringExtra(EXTRA_IMAGE_FILENAME), imageViewPoster);
         textViewDescription.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
@@ -97,14 +101,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
 
     public static String getTimeString(int time) {
-
         System.out.println("Time: " + time);
         String hours = String.valueOf(time/60);
         String minutes = String.valueOf(time%60);
-
         String str = hours + " hours and " + minutes + " minutes";
-
-        System.out.println("String: " + str);
 
         return str;
     }
